@@ -1,3 +1,5 @@
+using Application.Activities.Commands;
+using Application.Activities.Queries;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
 
@@ -12,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddCors();
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<GetActivityList>());
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining<CreateActivity>());
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
