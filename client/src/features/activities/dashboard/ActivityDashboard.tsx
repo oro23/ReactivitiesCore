@@ -1,6 +1,4 @@
 import { Grid } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import ActivityList from "./ActivityList";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
