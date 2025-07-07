@@ -1,5 +1,3 @@
-// import React from "react";
-
 import { Group } from "@mui/icons-material";
 import {
   AppBar,
@@ -12,7 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 
-const NavBar = () => {
+type Props = {
+  openForm: () => void;
+};
+
+const NavBar = ({ openForm }: Props) => {
   return (
     <>
       <CssBaseline />
@@ -63,7 +65,12 @@ const NavBar = () => {
                   Contact
                 </MenuItem>
               </Box>
-              <Button size="large" variant="contained" color="warning">
+              <Button
+                size="large"
+                variant="contained"
+                color="warning"
+                onClick={openForm}
+              >
                 Create Activity
               </Button>
             </Toolbar>

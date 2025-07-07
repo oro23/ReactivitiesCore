@@ -3,35 +3,34 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ActivityList from "./ActivityList";
 import ActivityDetails from "../details/ActivityDetails";
+import ActivityForm from "../form/ActivityForm";
 
-const ActivityDashboard = () => {
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<
-    Activity | undefined
-  >(undefined);
+type Props = {
+  activities: Activity[];
+  selectedActivity: Activity | undefined;
+  selectActivity: (id: string) => void;
+  cancelSelectActivity: () => void;
+  openForm: (id?: string) => void;
+  closeForm: () => void;
+  editMode: boolean;
+};
 
-  const handleSelectActivity = (id: string) => {
-    setSelectedActivity(activities.find((x) => x.id === id));
-  };
-
-  const handleCancelSelectActivity = () => {
-    setSelectedActivity(undefined);
-  };
-
-  useEffect(() => {
-    axios
-      .get<Activity[]>("http://localhost:5148/api/activities")
-      .then((response) => setActivities(response.data));
-    return () => {};
-  }, []);
-
+const ActivityDashboard = ({
+  activities,
+  selectedActivity,
+  selectActivity,
+  cancelSelectActivity,
+  openForm,
+  closeForm,
+  editMode,
+}: Props) => {
   return (
     <>
       <Grid container spacing={3}>
         <Grid size={7}>
           <ActivityList
             activities={activities}
-            selectActivity={handleSelectActivity}
+            selectActivity={selectActivity}
           />
           {/* <List>
             {activities.map((actvity) => {
@@ -44,11 +43,15 @@ const ActivityDashboard = () => {
           </List> */}
         </Grid>
         <Grid size={5}>
-          {selectedActivity && (
+          {selectedActivity && !editMode && (
             <ActivityDetails
               activity={selectedActivity}
-              cancelSelectActivity={handleCancelSelectActivity}
+              cancelSelectActivity={cancelSelectActivity}
+              openForm={openForm}
             />
+          )}
+          {editMode && (
+            <ActivityForm closeForm={closeForm} activity={selectedActivity} />
           )}
         </Grid>
       </Grid>
