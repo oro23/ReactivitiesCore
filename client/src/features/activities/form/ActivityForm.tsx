@@ -4,9 +4,10 @@ import type { FormEvent } from "react";
 type Props = {
   activity?: Activity;
   closeForm: () => void;
+  submitForm: (activity: Activity) => void;
 };
 
-const ActivityForm = ({ activity, closeForm }: Props) => {
+const ActivityForm = ({ activity, closeForm, submitForm }: Props) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -18,7 +19,9 @@ const ActivityForm = ({ activity, closeForm }: Props) => {
       data[key] = value;
     });
 
+    if (activity) data.id = activity.id;
     console.log(data);
+    submitForm(data as unknown as Activity);
   };
 
   return (

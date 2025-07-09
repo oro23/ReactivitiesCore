@@ -34,6 +34,23 @@ function App() {
     setSelectedActivity(undefined);
   };
 
+  const handleSubmit = (activity: Activity) => {
+    if (activity.id)
+      setActivities(
+        activities.map((x) => (x.id === activity.id ? activity : x))
+      );
+    else {
+      const newActivity = { ...activity, id: activities.length.toString() };
+      setSelectedActivity(newActivity);
+      setActivities([...activities, newActivity]);
+    }
+    setEditMode(false);
+  };
+
+  const handleDelete = (id: string) => {
+    setActivities(activities.filter((x) => x.id !== id));
+  };
+
   useEffect(() => {
     axios
       .get<Activity[]>("http://localhost:5148/api/activities")
@@ -52,6 +69,8 @@ function App() {
           openForm={openForm}
           closeForm={closeForm}
           editMode={editMode}
+          submitForm={handleSubmit}
+          deleteActivity={handleDelete}
         />
       </Container>
     </Box>
