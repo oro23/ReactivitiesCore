@@ -1,20 +1,22 @@
-import { Box, Container, CssBaseline } from "@mui/material";
-
+import { Box, Container, CssBaseline, Typography } from "@mui/material";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { useActivities } from "../../lib/hooks/useActivities";
 
 function App() {
-  const [activities, setActivities] = useState<Activity[]>([]);
+  // Use React Query thats why.
+  // const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<
     Activity | undefined
   >(undefined);
   const [editMode, setEditMode] = useState(false);
 
+  const { activities, isPending } = useActivities();
+
   const openForm = (id?: string) => {
     if (id) {
-      setSelectedActivity(activities.find((x) => x.id === id));
+      setSelectedActivity(activities!.find((x) => x.id === id));
     } else {
       setSelectedActivity(undefined);
     }
@@ -26,7 +28,7 @@ function App() {
   };
 
   const selectActivity = (id: string) => {
-    setSelectedActivity(activities.find((x) => x.id === id));
+    setSelectedActivity(activities!.find((x) => x.id === id));
     setEditMode(false);
   };
 
@@ -35,43 +37,50 @@ function App() {
   };
 
   const handleSubmit = (activity: Activity) => {
-    if (activity.id)
-      setActivities(
-        activities.map((x) => (x.id === activity.id ? activity : x))
-      );
-    else {
-      const newActivity = { ...activity, id: activities.length.toString() };
-      setSelectedActivity(newActivity);
-      setActivities([...activities, newActivity]);
-    }
+    // if (activity.id)
+    //   setActivities(
+    //     activities.map((x) => (x.id === activity.id ? activity : x))
+    //   );
+    // else {
+    //   const newActivity = { ...activity, id: activities.length.toString() };
+    //   setSelectedActivity(newActivity);
+    //   setActivities([...activities, newActivity]);
+    // }
+    console.log(activity);
     setEditMode(false);
   };
 
   const handleDelete = (id: string) => {
-    setActivities(activities.filter((x) => x.id !== id));
+    console.log(id);
+    // setActivities(activities.filter((x) => x.id !== id));
   };
 
-  useEffect(() => {
-    axios
-      .get<Activity[]>("http://localhost:5148/api/activities")
-      .then((response) => setActivities(response.data));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get<Activity[]>("http://localhost:5148/api/activities")
+  //     .then((response) => setActivities(response.data));
+  // }, []);
+
   return (
     <Box sx={{ bgcolor: "#eeeeee" }}>
       <CssBaseline />
       <NavBar openForm={() => openForm()} />
       <Container maxWidth="xl" sx={{ mt: 3 }}>
-        <ActivityDashboard
-          activities={activities}
-          selectedActivity={selectedActivity}
-          selectActivity={selectActivity}
-          cancelSelectActivity={cancelSelectActivity}
-          openForm={openForm}
-          closeForm={closeForm}
-          editMode={editMode}
-          submitForm={handleSubmit}
-          deleteActivity={handleDelete}
-        />
+        {!activities || isPending ? (
+          <Typography>Loading....</Typography>
+        ) : (
+          <ActivityDashboard
+            activities={activities}
+            selectedActivity={selectedActivity}
+            selectActivity={selectActivity}
+            cancelSelectActivity={cancelSelectActivity}
+            openForm={openForm}
+            closeForm={closeForm}
+            editMode={editMode}
+            submitForm={handleSubmit}
+            deleteActivity={handleDelete}
+          />
+        )}
       </Container>
     </Box>
   );
