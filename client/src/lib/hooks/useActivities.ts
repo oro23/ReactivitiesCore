@@ -1,8 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiClient from "../apiClient";
 
-export const useActivities = () =>{
-    const { data: activities, isPending } = useQuery({
+export const useActivities = () => {
+  const queryClient = useQueryClient();
+
+  const { data: activities, isPending } = useQuery({
     queryKey: ["activities"],
     queryFn: async () => {
       const response = await apiClient.get<Activity[]>("/activities");
@@ -10,5 +12,20 @@ export const useActivities = () =>{
     },
   });
 
-  return {activities, isPending}
-}
+  const updateActivity = useMutation({
+    mutationFn: async (activity: Activity) => {
+      // const response = await apiClient.put<Activity>(
+      //   `/activities/${activity.id}`,
+      //   activity
+      // );
+      // return response.data;
+      await apiClient.put("/activities/", activity);
+    },
+    onSuccess: async () => {
+      // Invalidate the query to refetch the activities
+      await queryClient.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+
+  return { activities, isPending, updateActivity };
+};

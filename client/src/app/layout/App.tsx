@@ -77,7 +77,7 @@ function App() {
             openForm={openForm}
             closeForm={closeForm}
             editMode={editMode}
-            submitForm={handleSubmit}
+            //submitForm={handleSubmit}
             deleteActivity={handleDelete}
           />
         )}

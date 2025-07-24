@@ -1,0 +1,56 @@
+1- Navigation vs Router
+
+| Component  | Role                            |
+| ---------- | ------------------------------- |
+| `<Link>`   | Creates navigation links        |
+| `<Router>` | Enables routing in the app      |
+| `<Routes>` | Container for route definitions |
+| `<Route>`  | Maps a URL path to a component  |
+
+2- Router protection in react typescript
+
+3- Different types of hooks in reactjs
+| Hook               | Purpose                                                           |
+| ------------------ | ----------------------------------------------------------------- |
+| `useState`         | Manage state in functional components.                            |
+| `useEffect`        | Run side effects after render.                                    |
+| `useContext`       | Access context values in your component.                          |
+| `useReducer`       | Manage more complex state logic.                                  |
+| `useCallback`      | Memoize callback functions to optimize performance.               |
+| `useMemo`          | Memoize values to avoid unnecessary recalculations.               |
+| `useRef`           | Hold mutable values and persist across renders.                   |
+| `useTransition`    | Manage concurrent rendering for smoother UI updates.              |
+| `useDeferredValue` | Delay non-urgent updates for improved performance.                |
+| `useNavigate`      | Navigate to different routes programmatically (React Router).     |
+| `useLocation`      | Get current URL/location data (React Router).                     |
+| `useParams`        | Access dynamic URL parameters (React Router).                     |
+| `useMatch`         | Check if the current path matches a route pattern (React Router). |
+
+4- Redux
+5- Optimization
+6- Security
+7- Middleware
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
