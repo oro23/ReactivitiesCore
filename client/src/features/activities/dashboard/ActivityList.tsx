@@ -7,14 +7,14 @@ type Props = {
   //cancelSelectActivity: () => void;
   //   selectedActivity: Activity | undefined;
   selectedActivity?: Activity;
-  deleteActivity: (id: string) => void;
+  //deleteActivity: (id: string) => void;
 };
 
 const ActivityList = ({
   activities,
   selectActivity,
-  deleteActivity,
-}: Props) => {
+}: //deleteActivity,
+Props) => {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -24,7 +24,7 @@ const ActivityList = ({
               key={activity.id}
               activity={activity}
               selectActivity={selectActivity}
-              deleteActivity={deleteActivity}
+              //deleteActivity={deleteActivity}
             />
           );
         })}

@@ -7,14 +7,19 @@ import {
   Chip,
   Typography,
 } from "@mui/material";
+import { useActivities } from "../../../lib/hooks/useActivities";
 
 type Props = {
   activity: Activity;
   selectActivity: (id: string) => void;
-  deleteActivity: (id: string) => void;
+  //deleteActivity: (id: string) => void;
 };
 
-const ActivityCard = ({ activity, selectActivity, deleteActivity }: Props) => {
+const ActivityCard = ({
+  activity,
+  selectActivity /*deleteActivity*/,
+}: Props) => {
+  const { deleteActivity } = useActivities();
   return (
     <>
       <Card>
@@ -42,7 +47,9 @@ const ActivityCard = ({ activity, selectActivity, deleteActivity }: Props) => {
               size="medium"
               color="error"
               variant="contained"
-              onClick={() => deleteActivity(activity.id)}
+              //onClick={() => deleteActivity(activity.id)}
+              disabled={deleteActivity.isPending}
+              onClick={() => deleteActivity.mutateAsync(activity.id)}
             >
               Delete
             </Button>

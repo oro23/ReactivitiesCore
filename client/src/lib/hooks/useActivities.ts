@@ -27,5 +27,41 @@ export const useActivities = () => {
     },
   });
 
-  return { activities, isPending, updateActivity };
+  const createActivity = useMutation({
+    mutationFn: async (activity: Activity) => {
+      // const response = await apiClient.put<Activity>(
+      //   `/activities/${activity.id}`,
+      //   activity
+      // );
+      // return response.data;
+      await apiClient.post("/activities/", activity);
+    },
+    onSuccess: async () => {
+      // Invalidate the query to refetch the activities
+      await queryClient.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+
+  const deleteActivity = useMutation({
+    mutationFn: async (id: string) => {
+      // const response = await apiClient.put<Activity>(
+      //   `/activities/${activity.id}`,
+      //   activity
+      // );
+      // return response.data;
+      await apiClient.delete(`/activities/${id}`);
+    },
+    onSuccess: async () => {
+      // Invalidate the query to refetch the activities
+      await queryClient.invalidateQueries({ queryKey: ["activities"] });
+    },
+  });
+
+  return {
+    activities,
+    isPending,
+    updateActivity,
+    createActivity,
+    deleteActivity,
+  };
 };

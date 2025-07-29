@@ -78,7 +78,7 @@ function App() {
             closeForm={closeForm}
             editMode={editMode}
             //submitForm={handleSubmit}
-            deleteActivity={handleDelete}
+            //deleteActivity={handleDelete}
           />
         )}
       </Container>

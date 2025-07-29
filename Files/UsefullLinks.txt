@@ -1,8 +1,0 @@
--: RBAC
-https://www.codeproject.com/Articles/875547/Custom-Roles-Based-Access-Control-RBAC-in-ASP-NET
-
--: ABAC
-https://code-maze.com/atribute-based-access-control-blazor-webassembly-identityserver4/
-
--: RBAC
--: https://docs.security.tamu.edu/docs/identity-security/authorization/options/oidc-rbac/
